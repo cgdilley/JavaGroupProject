@@ -22,16 +22,21 @@ public class GameState
   private Player player;
   private ArrayList<Token> tokens;
   Difficulty difficulty;
+  Screen screen;
   
+  ///// CONSTRUCTORS
   /** Default constructor.
     */
   public GameState()
   {
-    player = null;
+    player = new Player();
     tokens = new ArrayList<Token>();
     difficulty = Difficulty.EASY;
   }
   
+  
+  
+  ///// ACCESSOR METHODS
   /** Sets the current game's difficulty level.
     * @param diff - Member of Difficulty enum representing difficulty to set
     */
@@ -40,10 +45,37 @@ public class GameState
     difficulty = diff;
   }
   
+  /** Gets the current game's difficulty level
+    * @return - Member of Difficulty enum representing current difficulty setting
+    */
+  public Difficulty getDifficulty()
+  {
+    return difficulty;
+  }
+  
+  /** Gets the Player object present within the game.
+    * @return - The game's player object.
+    */
+  public Player getPlayer()
+  {
+    return player;
+  }
+  
+  /** Gets the list of tokens present within the game.
+    * @return - The game's list of tokens
+    */
+  public ArrayList<Token> getTokens()
+  {
+    return tokens;
+  }
+  
+  
+  ///// FUNCTIONAL METHODS
   /** Starts the game with a countdown.
     */
   public void start()
   {
+    initializeScreen();
     performCountdown();
     mainLoop();
   }
@@ -56,12 +88,25 @@ public class GameState
     */
   private void mainLoop()
   {
-    
+    while (screen.isOpen())
+    {
+      screen.repaint();
+    }
+  }
+  
+  /** Performs all actions required to initialize the screen.
+    */
+  private void initializeScreen()
+  {
+    screen = new Screen(this);
   }
   
   /** Performs 3-2-1-go action before game begins
     */
-  private void performCountdown() {}
+  private void performCountdown() 
+  {
+  
+  }
   
   /** Spawns new tokens and updates all tokens
     */
@@ -77,6 +122,7 @@ public class GameState
     */
   private void onTokenEaten(Token eatenToken)
   {
+    
   }
   
   
