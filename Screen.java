@@ -8,6 +8,7 @@
   * 
   * CHANGELOG:
   * 03.07.15 - Added basic initial functionality (Chris)
+  * 04.07.15 - Fixed comment typo, changed player color to be a static constant (Chris)
   */
 
 import java.awt.*;
@@ -35,6 +36,7 @@ public class Screen extends JPanel
   
   // The amount of space surrounding the player object inside its grid location
   public static final int PLAYER_MARGINS = 2;
+  public static final Color PLAYER_COLOR_HEAD = new Color(0,255,0);  // Green
   
   
   
@@ -103,8 +105,8 @@ public class Screen extends JPanel
     //  the row/column dimensions minus 1) multiplied by the width/height of the columns/rows, and then adding in the
     //  the margins for the game board and the margins for the player.  This gives you the top-left corner of the area
     //  in which to draw the player.  Then the width/height of the player to be drawn is the width/height of the
-    //  columns/rows minus the space required for margins on other side.
-    g2d.setPaint(new Color(0,255,0)); // Green
+    //  columns/rows minus the space required for margins on either side.
+    g2d.setPaint(PLAYER_COLOR_HEAD);
     g2d.fill(new Ellipse2D.Float(GAME_MARGINS+PLAYER_MARGINS + (GAME_COLUMN_WIDTH * game.getPlayer().getHead().getX()),
                                  GAME_MARGINS+PLAYER_MARGINS + (GAME_ROW_HEIGHT * game.getPlayer().getHead().getY()),
                                  GAME_COLUMN_WIDTH - (PLAYER_MARGINS*2),
