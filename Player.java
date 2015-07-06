@@ -153,7 +153,7 @@ public class Player {
                 } else if(secondLast.isToLeftOf(last)) {
                     toAdd.set(last.getRight(1));
                 } else if(secondLast.isToRightOf(last)) {
-                    toAdd.set(last.getX() - 1, last.getY());
+                    toAdd.set(last.getLeft(1));
                 }
  
             } //else

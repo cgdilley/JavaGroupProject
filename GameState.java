@@ -10,6 +10,8 @@
   * 
   * CHANGELOG:
   * 02.07 - Initial write-up (outline) of class.  (Chris)
+  * 03.07 - Added basic rendering functionality.
+  * 06.07 - Added looping and basic player updating.
   */
 
 import java.util.*;
@@ -107,14 +109,8 @@ public class GameState
         player.updatePlayer();
         playerMoveTime = currTime;
         
-        if (player.getHead().getX() >= Screen.GAME_COLUMNS)
-          player.getHead().setX(0);
-        else if (player.getHead().getX() < 0)
-          player.getHead().setX(Screen.GAME_COLUMNS-1);
-        if (player.getHead().getY() >= Screen.GAME_ROWS)
-          player.getHead().setY(0);
-        if (player.getHead().getY() < 0)
-          player.getHead().setY(Screen.GAME_ROWS-1);          
+        testPlayerBounds(Screen.GAME_COLUMNS, Screen.GAME_ROWS);
+                 
       }
       /*
       if (currTime - playerGrowTime > playerGrowDelay)
@@ -139,6 +135,20 @@ public class GameState
   private void performCountdown() 
   {
   
+  }
+  
+  /** Tests to see if the player is out of bounds, and loops them back around
+    */
+  private void testPlayerBounds(int maxCol, int maxRow)
+  {
+    if (player.getHead().getX() >= maxCol)
+       player.getHead().setX(0);
+    else if (player.getHead().getX() < 0)
+      player.getHead().setX(maxCol-1);
+    if (player.getHead().getY() >= maxRow)
+      player.getHead().setY(0);
+    if (player.getHead().getY() < 0)
+      player.getHead().setY(maxRow-1); 
   }
   
   /** Spawns new tokens and updates all tokens

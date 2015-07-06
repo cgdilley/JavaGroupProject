@@ -9,6 +9,8 @@
   * CHANGELOG:
   * 03.07.15 - Added basic initial functionality (Chris)
   * 04.07.15 - Fixed comment typo, changed player color to be a static constant (Chris)
+  * 06.07.15 - Changed paint() to paintComponent(), also calling super.paintComponent to wipe screen.  Also added
+  *            code for rendering tail elements, but is not currently active.
   */
 
 import java.awt.*;
@@ -37,6 +39,7 @@ public class Screen extends JPanel
   // The amount of space surrounding the player object inside its grid location
   public static final int PLAYER_MARGINS = 2;
   public static final Color PLAYER_COLOR_HEAD = new Color(0,255,0);  // Green
+  public static final Color PLAYER_COLOR_TAIL = new Color(255,0,0);  // Red
   
   
   
@@ -113,7 +116,16 @@ public class Screen extends JPanel
                                  GAME_MARGINS+PLAYER_MARGINS + (GAME_ROW_HEIGHT * game.getPlayer().getHead().getY()),
                                  GAME_COLUMN_WIDTH - (PLAYER_MARGINS*2),
                                  GAME_ROW_HEIGHT - (PLAYER_MARGINS*2)));
-    
+    // Perform similar math to determine rendering of all tail elements
+  /*g2d.setPaint(PLAYER_COLOR_TAIL);
+    for (Coord elem : game.getPlayer().getTail())
+    {
+      g2d.fill(new Ellipse2D.Float(GAME_MARGINS+PLAYER_MARGINS + (GAME_COLUMN_WIDTH * elem.getX()),
+                                 GAME_MARGINS+PLAYER_MARGINS + (GAME_ROW_HEIGHT * elem.getY()),
+                                 GAME_COLUMN_WIDTH - (PLAYER_MARGINS*2),
+                                 GAME_ROW_HEIGHT - (PLAYER_MARGINS*2)));
+    }
+    */
   }
   
   /** Return whether JFrame is active or not.
