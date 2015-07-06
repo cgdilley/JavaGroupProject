@@ -24,7 +24,7 @@ public class Player {
     public Player() {
         head = new Coord(1,1);
         tail = new ArrayList<Coord>();
-       
+        direction = RIGHT;
     }
    
     /**
@@ -124,16 +124,16 @@ public class Player {
             {
                 if(direction == UP)
                 {
-                    toAdd.set(head.getX(), head.getY() - 1);
+                    toAdd.set(head.getBelow(1));
                 } else if(direction == DOWN)
                 {
-                    toAdd.set(head.getX(), head.getY() + 1);
+                    toAdd.set(head.getAbove(1));
                 } else if(direction == LEFT)
                 {
-                    toAdd.set(head.getX() + 1, head.getY());
+                    toAdd.set(head.getRight(1));
                 } else if(direction == RIGHT)
                 {
-                    toAdd.set(head.getX() - 1, head.getY());
+                    toAdd.set(head.getLeft(1));
                 }
                
             } else {//otherwise, add new coordinate depending on last and second last part in line
@@ -147,11 +147,11 @@ public class Player {
                 }
                
                 if(secondLast.isAbove(last)) {
-                    toAdd.set(last.getX(), last.getY() - 1);
+                    toAdd.set(last.getBelow(1));
                 } else if(secondLast.isBelow(last)) {
-                    toAdd.set(last.getX(), last.getY() + 1);
+                    toAdd.set(last.getAbove(1));
                 } else if(secondLast.isToLeftOf(last)) {
-                    toAdd.set(last.getX()+1, last.getY());
+                    toAdd.set(last.getRight(1));
                 } else if(secondLast.isToRightOf(last)) {
                     toAdd.set(last.getX() - 1, last.getY());
                 }

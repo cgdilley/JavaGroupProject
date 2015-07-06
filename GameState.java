@@ -19,10 +19,13 @@ public class GameState
   
   public static enum Difficulty { EASY, MEDIUM, HARD }
   
+  public static final long PLAYER_DEFAULT_MOVE_DELAY = 200;
+  
   private Player player;
   private ArrayList<Token> tokens;
   Difficulty difficulty;
   Screen screen;
+  private long playerMoveDelay;
   
   ///// CONSTRUCTORS
   /** Default constructor.
@@ -32,6 +35,7 @@ public class GameState
     player = new Player();
     tokens = new ArrayList<Token>();
     difficulty = Difficulty.EASY;
+    playerMoveDelay = PLAYER_DEFAULT_MOVE_DELAY;
   }
   
   
@@ -88,8 +92,37 @@ public class GameState
     */
   private void mainLoop()
   {
-    while (screen.isOpen())
+    long playerMoveTime = 0;
+    
+    //// TEMPORARY STUFF FOR TESTING
+    long playerGrowTime = 0;
+    int playerGrowDelay = 500;
+    
+    while (true)
     {
+      long currTime = System.currentTimeMillis();
+      
+      if (currTime - playerMoveTime > playerMoveDelay)
+      {
+        player.updatePlayer();
+        playerMoveTime = currTime;
+        
+        if (player.getHead().getX() >= Screen.GAME_COLUMNS)
+          player.getHead().setX(0);
+        else if (player.getHead().getX() < 0)
+          player.getHead().setX(Screen.GAME_COLUMNS-1);
+        if (player.getHead().getY() >= Screen.GAME_ROWS)
+          player.getHead().setY(0);
+        if (player.getHead().getY() < 0)
+          player.getHead().setY(Screen.GAME_ROWS-1);          
+      }
+      /*
+      if (currTime - playerGrowTime > playerGrowDelay)
+      {
+        player.addToTail(1);
+        playerGrowTime = currTime;
+      }*/
+      
       screen.repaint();
     }
   }

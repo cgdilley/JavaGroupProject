@@ -79,8 +79,10 @@ public class Screen extends JPanel
     * @param g - Graphics object to manipulate for rendering objects.
     */
   @Override
-  public void paint(Graphics g)
+  public void paintComponent(Graphics g)
   {
+    super.paintComponent(g);
+    
     Graphics2D g2d = (Graphics2D) g;
     
     /* EXPLANATIONS FOR ALL CONSTANTS CAN BE FOUND IN THEIR DECLARATIONS */
