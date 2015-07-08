@@ -89,12 +89,12 @@ public class Player {
                 copy.add(i, tail.get(i));
             }
  
-            tail.add(0, oldHeadPos);//previous position of head becomes first tail part
+            tail.set(0, oldHeadPos);//previous position of head becomes first tail part
  
             if(tail.size() > 1) {
                 for(int i = 1; i < tail.size(); i++) //set all further elements in tail to what the part in front of them
                 {
-                    tail.add(i, copy.get(i-1));  //previously was (and still is in "copy")
+                    tail.set(i, copy.get(i-1));  //previously was (and still is in "copy")
                 }
             }
         }
