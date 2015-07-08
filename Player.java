@@ -108,6 +108,15 @@ public class Player {
        
         return head;
     }
+    
+    /**
+     * Get part of the tail
+     * @param index - index of tail part we want
+     * @return - the part of the tail at the specified index
+     */
+    public Coord getTailPart(int index) {
+        return tail.get(index);
+    }
    
     /**
      * Add a food token to the end of the tail of the lizard (on the opposite side of the
