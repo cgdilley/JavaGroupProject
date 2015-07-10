@@ -144,7 +144,7 @@ public class GameState
     */
   private void testPlayerBounds(int maxCol, int maxRow)
   {
-    // If the player (P) is beyond bound limit (B), then player should instead be placed at (B-P)
+    // If the player (P) is beyond bound limit (B), then player should instead be placed at (P-B)
     // If the player (P) is less than 0, then player should instead be placed at (B+P)
     if (player.getHead().getX() >= maxCol)
        player.getHead().setX(player.getHead().getX() - maxCol);
