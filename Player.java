@@ -34,7 +34,7 @@ public class Player {
        
         //move head in given direction
         //tail follows head
-        Coord headPos = head;
+        Coord headPos = new Coord(head.getX(), head.getY());
         switch(direction)
         {
             case UP: if(!collision(head.getAbove(1)))
@@ -83,19 +83,9 @@ public class Player {
         //the new place is the place that the part in front (at its index -1) had before the moving
         if(!tail.isEmpty()) {
            
-            ArrayList<Coord> copy = new ArrayList<>(); //copy tail to save positions
-            for(int i = 0; i < tail.size(); i++)
-            {
-                copy.add(i, tail.get(i));
-            }
- 
-            tail.set(0, oldHeadPos);//previous position of head becomes first tail part
- 
-            if(tail.size() > 1) {
-                for(int i = 1; i < tail.size(); i++) //set all further elements in tail to what the part in front of them
-                {
-                    tail.set(i, copy.get(i-1));  //previously was (and still is in "copy")
-                }
+            tail.add(0, oldHeadPos);//insert new tail part at old head position
+            tail.remove(tail.size() - 1);//remove last tail element
+            
             }
         }
     }
