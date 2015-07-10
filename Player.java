@@ -86,10 +86,9 @@ public class Player {
             tail.add(0, oldHeadPos);//insert new tail part at old head position
             tail.remove(tail.size() - 1);//remove last tail element
             
-            }
         }
     }
-   
+       
     /**
      * Get head coordinates of lizard
      * @return - head coord of lizard
@@ -107,6 +106,15 @@ public class Player {
     public Coord getTailPart(int index) {
         return tail.get(index);
     }
+    
+    /** Get the entire tail
+      * @return - the array containing all tail elements
+      */
+    public ArrayList<Coord> getTail()
+    {
+      return tail;
+    }
+      
    
     /**
      * Add a food token to the end of the tail of the lizard (on the opposite side of the

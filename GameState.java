@@ -12,6 +12,7 @@
   * 02.07 - Initial write-up (outline) of class.  (Chris)
   * 03.07 - Added basic rendering functionality.
   * 06.07 - Added looping and basic player updating.
+  * 10.07 - Fixed minor details with bounding player elements and aligned it with recent Player.java updates.
   */
 
 import java.util.*;
@@ -100,6 +101,8 @@ public class GameState
     long playerGrowTime = 0;
     int playerGrowDelay = 500;
     
+    player.addToTail(6);
+    
     while (true)
     {
       long currTime = System.currentTimeMillis();
@@ -112,8 +115,8 @@ public class GameState
         testPlayerBounds(Screen.GAME_COLUMNS, Screen.GAME_ROWS);
                  
       }
-      /*
-      if (currTime - playerGrowTime > playerGrowDelay)
+      
+      /*if (currTime - playerGrowTime > playerGrowDelay)
       {
         player.addToTail(1);
         playerGrowTime = currTime;
@@ -141,14 +144,29 @@ public class GameState
     */
   private void testPlayerBounds(int maxCol, int maxRow)
   {
+    // If the player (P) is beyond bound limit (B), then player should instead be placed at (B-P)
+    // If the player (P) is less than 0, then player should instead be placed at (B+P)
     if (player.getHead().getX() >= maxCol)
-       player.getHead().setX(0);
+       player.getHead().setX(player.getHead().getX() - maxCol);
     else if (player.getHead().getX() < 0)
-      player.getHead().setX(maxCol-1);
+      player.getHead().setX(maxCol + player.getHead().getX());
     if (player.getHead().getY() >= maxRow)
-      player.getHead().setY(0);
+      player.getHead().setY(player.getHead().getY() - maxRow);
     if (player.getHead().getY() < 0)
-      player.getHead().setY(maxRow-1); 
+      player.getHead().setY(maxRow + player.getHead().getY());
+    
+    // Iterate through all tail elements and apply the same logic to them as the player
+    for (Coord elem : player.getTail())
+    {
+      if (elem.getX() >= maxCol)
+        elem.setX(elem.getX() - maxCol);
+      else if (elem.getX() < 0)
+        elem.setX(maxCol + elem.getX());
+      else if (elem.getY() >= maxRow)
+        elem.setY(elem.getY() - maxRow);
+      else if (elem.getY() < 0)
+        elem.setY(maxRow + elem.getY());      
+    }
   }
   
   /** Spawns new tokens and updates all tokens
