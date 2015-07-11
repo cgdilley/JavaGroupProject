@@ -9,7 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyListener;
 import java.util.*;
  
-public class Player {
+public class Player implements KeyListener {
    
     private Coord head; //head of the lizard, moving/controlled
     private ArrayList<Coord> tail; //array of tokens forming the tail of the lizard
@@ -79,8 +79,6 @@ public class Player {
      * @param oldHeadPos position that head had before it was moved
      */
     private void tailFollow(Coord oldHeadPos) {
-        //each coord in the tail array moves one step,
-        //the new place is the place that the part in front (at its index -1) had before the moving
         if(!tail.isEmpty()) {
            
             tail.add(0, oldHeadPos);//insert new tail part at old head position
@@ -204,8 +202,8 @@ public class Player {
     }
    
     //changing direction of moving depending on key actions (ARROW KEYS)
-    private class Keys extends KeyAdapter implements KeyListener {
-        public void directionGiven(KeyEvent e)
+        @Override
+        public void keyPressed(KeyEvent e)
         {
             if(e.getKeyCode()==KeyEvent.VK_UP && direction != DOWN)
             {
@@ -225,6 +223,12 @@ public class Player {
             }
         }
    
-    }
+       @Override
+       public void keyTyped(KeyEvent e) {
+       }
+       @Override
+       public void keyReleased(KeyEvent e) {
+        
+       }
    
 }
