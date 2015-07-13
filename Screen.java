@@ -75,6 +75,7 @@ public class Screen extends JPanel
     frame.setSize(width, height);
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.addKeyListener(game.getPlayer());
     
     this.game = game;
   }
