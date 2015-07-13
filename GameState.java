@@ -13,9 +13,13 @@
   * 03.07 - Added basic rendering functionality.
   * 06.07 - Added looping and basic player updating.
   * 10.07 - Fixed minor details with bounding player elements and aligned it with recent Player.java updates.
+  * 13.07 - Reconfigured how main loop worked, from being a standard while loop with frame redrawing, to timers with
+  *          action listeners to trigger redraw.
   */
 
 import java.util.*;
+import java.awt.event.*;
+import javax.swing.Timer;
 
 public class GameState
 {
@@ -95,35 +99,17 @@ public class GameState
     */
   private void mainLoop()
   {
-    long playerMoveTime = 0;
+    player.addToTail(6);  /// TEMP
     
-    //// TEMPORARY STUFF FOR TESTING
-    long playerGrowTime = 0;
-    int playerGrowDelay = 500;
-    
-    player.addToTail(6);
-    
-    while (true)
-    {
-      long currTime = System.currentTimeMillis();
-      
-      if (currTime - playerMoveTime > playerMoveDelay)
-      {
+    Timer timer = new Timer((int)PLAYER_DEFAULT_MOVE_DELAY, new ActionListener() {
+      public void actionPerformed(ActionEvent e) 
+      {     
         player.updatePlayer();
-        playerMoveTime = currTime;
-        
         testPlayerBounds(Screen.GAME_COLUMNS, Screen.GAME_ROWS);
-                 
-      }
-      
-      /*if (currTime - playerGrowTime > playerGrowDelay)
-      {
-        player.addToTail(1);
-        playerGrowTime = currTime;
-      }*/
-      
-      screen.repaint();
-    }
+        screen.repaint();
+      }  
+    });
+    timer.start();
   }
   
   /** Performs all actions required to initialize the screen.

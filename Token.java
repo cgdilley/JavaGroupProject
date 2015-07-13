@@ -1,8 +1,12 @@
-/** Token.java
-  * 
-  * -- PLACEHOLDER --
-  * 
-  */
+/* class Token
+ * Used as base class for Fruit and Sound
+ */
 
-public class Token
-{}
+/**
+ * @author Patricia
+ */
+
+
+public class Token {
+    
+}

@@ -12,6 +12,7 @@
   * 06.07.15 - Changed paint() to paintComponent(), also calling super.paintComponent to wipe screen.  Also added
   *            code for rendering tail elements, but is not currently active.
   * 10.07.15 - Activated code for rendering tail
+  * 13.07.15 - Changed paintComponent() back to paint().  Not sure it actually matters.
   */
 
 import java.awt.*;
@@ -84,9 +85,9 @@ public class Screen extends JPanel
     * @param g - Graphics object to manipulate for rendering objects.
     */
   @Override
-  public void paintComponent(Graphics g)
+  public void paint(Graphics g)
   {
-    super.paintComponent(g);
+    super.paint(g);
     
     Graphics2D g2d = (Graphics2D) g;
     
