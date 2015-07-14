@@ -7,6 +7,6 @@
  */
 
 
-public class Token {
+public class Token2 {
     
 }
