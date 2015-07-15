@@ -16,12 +16,12 @@ public class Fruit extends Token {
    
     private ArrayList<String> soundColl = new ArrayList(); //The collection of sounds which share a certain feature
     private String sortOfFruit; //can be used as argument for the loadFruitImage() method
+    private String task; //display the task to be fulfilled
     
     private final int FRUIT_SIZE = 10;
     private final int RANDOM_POS = 29;
-    private int fruit_x;
-    private int fruit_y;
     public Image fruitPic;
+    public Coord fruit;
     
     /*
      * Default constructor
@@ -29,6 +29,7 @@ public class Fruit extends Token {
     public Fruit()  {
         soundColl = null;
         sortOfFruit = "no sort of fruit";
+        task = "no task";
     }
     
     /*
@@ -78,6 +79,23 @@ public class Fruit extends Token {
     }
     
     
+    /*
+     * Set the task to aTask
+     * @param aTask - the task to be fulfilled
+     */
+    public void setTask(String aTask)  {
+        task = aTask;
+    }
+    
+    /*
+     * Return the task
+     * @return the task
+     */
+    public String getTask()    {
+        return task;
+    }
+    
+    
      /*
      * Method to check whether a Sound object belongs to a certain sound collection
      * @return true if the sound is in the collection, false otherwise
@@ -94,22 +112,23 @@ public class Fruit extends Token {
     
     /*
      * Method to locate the Fruit in the game
+     * @Override Token.locateToken()
      */
-    public void locateFruit()  {
+    public void locateToken()  {
         int i = (int) (Math.random()*RANDOM_POS);
-        fruit_x = (i*FRUIT_SIZE);
+        setTokenX(i*FRUIT_SIZE);
         
         int j = (int) (Math.random()*RANDOM_POS);
-        fruit_y = (i*FRUIT_SIZE);
+        setTokenY(i*FRUIT_SIZE);
         
-        Coord fruit = new Coord(fruit_x, fruit_y);
+        fruit = new Coord(getTokenX(), getTokenY());
     }
     
     /*
      * Method for loading an image of a fruit to render it to the screen
-     * @param fileName - the name of the image that is to be displayed
+     * @Override Token.loadTokenImage()
      */
-    public void loadFruitImage() {
+    public void loadTokenImage() {
         ImageIcon image = new ImageIcon(getSortOfFruit() + ".png");
         fruitPic = image.getImage();
     }
