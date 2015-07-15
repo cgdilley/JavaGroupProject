@@ -1,5 +1,5 @@
 /* class Sound:
- * Creates Sound objects that are rendered to the screen as IPA symbols
+ * Creates Sound objects that are rendered as IPA symbols to the screen
  * Right sound has to be eaten by snake to grow, a wrong sound will make it shrink
  */
 
@@ -15,9 +15,8 @@ public class Sound extends Token {
     private String soundName; //can be used as argument for the loadSoundImage() method
     private final int SOUND_SIZE = 10;
     private final int RANDOM_POS = 29;
-    private int sound_x;
-    private int sound_y;
-    public Image soundPic;
+    public Image soundPic;    
+    public Coord sound;
     
     
     /*
@@ -34,7 +33,7 @@ public class Sound extends Token {
     public Sound(String aName)  {
         soundName = aName;
     }
-     
+    
     /*
      * Set a Sound to name aName
      * @param aName - the name of the Sound
@@ -54,21 +53,23 @@ public class Sound extends Token {
         
     /*
      * Method to locate the Sound in the game
+     * @Override Token.locateToken()
      */
-    public void locateSound()  {
+    public void locateToken()  {
         int i = (int) (Math.random()*RANDOM_POS);
-        sound_x = (i*SOUND_SIZE);
+        setTokenX(i*SOUND_SIZE);
         
         int j = (int) (Math.random()*RANDOM_POS);
-        sound_y = (i*SOUND_SIZE);
+        setTokenY(i*SOUND_SIZE);
         
-        Coord sound = new Coord(sound_x, sound_y);
+        sound = new Coord(getTokenX(), getTokenY());
     }
     
     /*
      * Method for loading an image of a sound to render it to the screen
+     * @Override Token.loadTokenImage()
      */
-    public void loadSoundImage() {
+    public void loadTokenImage() {
         ImageIcon image = new ImageIcon(getSound() + ".png");
         soundPic = image.getImage();
     }
@@ -79,7 +80,7 @@ public class Sound extends Token {
      */
     
     /*
-     * English consonants: p-b, t-d, thUnv-thV, s-z, shUnv-shV, flippedR, w, f-v, k-g, ng, m, n
+     * Consonants: p-b, t-d, thUnv-thV, s-z, shUnv-shV, ich-ach, flippedR, w, f-v, k-g, ng, m, n
      */
     
     
@@ -151,6 +152,20 @@ public class Sound extends Token {
      */
     public void shV() {
         setSound("shV");
+    }
+    
+    /*
+     * A String representation of the sound /ç/
+     */
+    public void ich() {
+        setSound("ich");
+    }
+    
+    /*
+     * A String representation of the sound /x/
+     */
+    public void ach() {
+        setSound("ach");
     }
     
     /*
@@ -232,7 +247,7 @@ public class Sound extends Token {
     
     
     /*
-     * Vowels: i-shorti, y-shorty, e, shorte, Ǝ, ae, schwa, u-shortu, o-shortu, shorta, a, ao
+     * Vowels: i-shorti, y-shorty, e, shorte, Ǝ, ae, schwa, vocR, u-shortu, o-shortu, shorta, a, ao
      */
     
     /*
@@ -296,6 +311,13 @@ public class Sound extends Token {
      */
     public void schwa() {
         setSound("schwa");
+    }
+    
+    /*
+     * A String representation of the sound /ɐ/
+     */
+    public void vocR() {
+        setSound("vocR");
     }
     
     /*
