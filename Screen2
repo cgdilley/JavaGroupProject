@@ -1,0 +1,116 @@
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import javax.swing.text.*;
+import javax.swing.border.*;
+import java.awt.geom.*;
+import java.awt.Graphics2D;
+/**
+ * @author anastasia
+ *
+ */
+public class LinguistLizard extends JPanel {
+   private Menu menu;
+   private JMenuItem menuItem;
+   private GameState game;
+   private JFrame frame;
+     public static final int SCREEN_WIDTH = 900;
+     public static final int SCREEN_HEIGHT = 700;
+     public static final int GAME_WIDTH = 600;
+     public static final int GAME_HEIGHT = 600;
+  // The amount of space to leave between the edges of the screen and the game board
+     public static final int GAME_MARGINS = 30;
+  
+  // The number of rows and columns of the game board and their inferred dimensions
+     public static final int GAME_ROWS = 20;
+     public static final int GAME_COLUMNS = 20;
+     public static final int GAME_COLUMN_WIDTH = GAME_WIDTH / GAME_COLUMNS;
+     public static final int GAME_ROW_HEIGHT = GAME_HEIGHT / GAME_ROWS;
+     
+  // The amount of space surrounding the player object inside its grid location
+    public static final int PLAYER_MARGINS = 2;
+    public static final Color PLAYER_COLOR_HEAD = new Color(0,255,0);  // Green
+    public static final Color PLAYER_COLOR_TAIL = new Color(255,0,0);  // Red
+    
+LinguistLizard() {
+  
+   /**
+ *creation of the main Game window
+ */
+}
+       
+    public void paintComponent(Graphics g) {
+       
+        super.paintComponent(g);
+        Graphics2D gr = (Graphics2D) g;
+        g.setColor(Color.RED);
+       
+        for (int x = GAME_MARGINS; x <= GAME_MARGINS+GAME_WIDTH; x += GAME_COLUMN_WIDTH)
+    {
+      gr.draw(new Line2D.Float(x, GAME_MARGINS, x, GAME_MARGINS + GAME_HEIGHT) );
+    }
+    // Draw all row boundaries, starting from the top side of the game board (0 + the margins for the game board) 
+    //  to the bottom side of the game board (0 + the margins for the game board + the height of the game board)
+    //  with an interval of the height of each row.
+    for (int y = GAME_MARGINS; y <= GAME_MARGINS+GAME_HEIGHT; y += GAME_ROW_HEIGHT)
+    {
+      gr.draw(new Line2D.Float(GAME_MARGINS, y, GAME_MARGINS + GAME_WIDTH, y) );
+    }
+   }
+    public void window (){
+     JFrame frame = new JFrame("Linguistic Lizard");
+     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+  frame.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
+  frame.setResizable(false);
+  frame.setVisible(true);
+  frame.setLocationRelativeTo(null);
+  frame.getContentPane().setBackground(Color.lightGray);
+     JMenuBar menubar = new JMenuBar();
+     frame.setJMenuBar(menubar);
+  JMenu game = new JMenu ("Game");
+  game.setMnemonic(KeyEvent.VK_F);
+  menubar.add(game);
+  JMenuItem restart = new JMenuItem("Restart", KeyEvent.VK_N);
+  game.add (restart);
+ // start.setMnemonic(KeyEvent.VK_P);
+  //start.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
+  //start.addActionListener(new ActionListener (){public void actionPerformed(ActionEvent eee){start();}});
+  JMenuItem exit = new JMenuItem("Exit");
+  game.add(exit);
+  JMenu difficulty = new JMenu ("Difficulty");
+  menubar.add(difficulty);
+  JMenuItem easy = new JMenuItem ("Easy");
+  difficulty.add(easy);
+  JMenuItem medium = new JMenuItem ("Medium");
+  difficulty.add(medium);
+   JMenuItem hard = new JMenuItem ("Hard");
+  difficulty.add(hard);
+  frame.setJMenuBar(menubar);
+  frame.getContentPane().setLayout(new FlowLayout());
+        // create JTextField
+
+  JTextField field = new JTextField("Choose a fruit");
+
+        // Indicates that this textfield is not editable
+   field.setEditable(false);
+   field.setSize(300, 300);
+
+        // add textfield to frame
+        
+     frame.add(field);
+    // frame.add(paint); 
+     frame.setVisible(true);
+
+}
+      
+ /**
+  * creates a menubar with menu items
+  */
+ public static void main(String[] args) {
+   new LinguistLizard().window();
+//LinguistLizard ll = new LinguistLizard ();
+//ll.window();
+
+ }
+ }
