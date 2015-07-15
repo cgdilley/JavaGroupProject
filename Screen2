@@ -57,6 +57,19 @@ LinguistLizard() {
       gr.draw(new Line2D.Float(GAME_MARGINS, y, GAME_MARGINS + GAME_WIDTH, y) );
     }
    }
+    public LinguistLizard(GameState game)
+  {
+    super();
+    init(game);
+  }
+  
+  /** Initializes the screen with new JFrame, using default screen options.
+    */
+  public void init(GameState game)
+  {
+    this.init(game, Screen.SCREEN_WIDTH, Screen.SCREEN_HEIGHT);
+  }
+  
     public void window (){
      JFrame frame = new JFrame("Linguistic Lizard");
      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,6 +104,8 @@ LinguistLizard() {
         // create JTextField
 
   JTextField field = new JTextField("Choose a fruit");
+   field.setPreferredSize( new Dimension( 100, 50 ) );
+
 
         // Indicates that this textfield is not editable
    field.setEditable(false);
