@@ -26,10 +26,13 @@ public class Apple extends Fruit {
         apple.add("z");
         apple.add("shUnv");
         apple.add("shV");
+        apple.add("ich");
+        apple.add("ach");
         apple.add("f");
         apple.add("v");
         super.setSoundColl(apple);
         super.setSortOfFruit("apple");
+        super.setTask("Collect only obstruents!");
     }
     
 }
