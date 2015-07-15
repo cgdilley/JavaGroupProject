@@ -1,6 +1,7 @@
 /*
  * Player class of the Linguist Lizard game.
- * Takes care of the functionality and movements of the lizard object.
+ * Takes care of the functionality and movements of the lizard object,
+ * consisting of head and tail.
  */
  
  
@@ -12,14 +13,15 @@ import java.util.*;
 public class Player implements KeyListener {
    
     private Coord head; //head of the lizard, moving/controlled
-    private ArrayList<Coord> tail; //array of tokens forming the tail of the lizard
+    private ArrayList<Coord> tail; //array of tokens forming the tail of the lizard, follows head
     private int direction; //direction of moving
     public static final int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3; //values for direction
     private boolean collisionOccured; //if lizard walks into himself
-    private boolean gameOver = false;
+    private boolean gameOver = false; 
    
     /**
      * Construct a new linguistic lizard.
+     * Specify head coordinate, tail array and initial direction of moving.
      */
     public Player() {
         head = new Coord(1,1);
@@ -28,22 +30,20 @@ public class Player implements KeyListener {
     }
    
     /**
-     * controll
+     * Method to move the lizard one step in the current given direction. 
      */
     public void updatePlayer() {  
        
-        //move head in given direction
-        //tail follows head
         Coord headPos = new Coord(head.getX(), head.getY());
         switch(direction)
         {
-            case UP: if(!collision(head.getAbove(1)))
+            case UP: if(!collision(head.getAbove(1)))//check if lizard would hit itself when moving there
                        {
-                        head.moveUp(1);
-                        tailFollow(headPos);
+                        head.moveUp(1); // move
+                        tailFollow(headPos); //make tail follow the head
                         break;
                         } else {
-                        gameOver= true;
+                        gameOver= true; //if collision occurs, game over
                         }
  
             case DOWN: if(!collision(head.getBelow(1)))
@@ -70,12 +70,12 @@ public class Player implements KeyListener {
                         } else {
                         gameOver = true;
                         }
-            default: //something must be wrong, probably game over.
+            default: gameOver = true;
         }
     }
    
     /**
-     * Make tail follow the head / every part move
+     * Method that makes the tail "follow" the head. 
      * @param oldHeadPos position that head had before it was moved
      */
     private void tailFollow(Coord oldHeadPos) {
@@ -97,7 +97,7 @@ public class Player implements KeyListener {
     }
     
     /**
-     * Get part of the tail
+     * Get a part of the tail
      * @param index - index of tail part we want
      * @return - the part of the tail at the specified index
      */
@@ -117,7 +117,7 @@ public class Player implements KeyListener {
     /**
      * Add a food token to the end of the tail of the lizard (on the opposite side of the
      * second last item of the tail compared to the last (so that its straight)
-     * @param add - the
+     * @param add - the number of parts to add
      */
     public void addToTail(int add) {
        
@@ -184,8 +184,8 @@ public class Player implements KeyListener {
    
     /**
      * Check if lizard hits itself
-     * @param place
-     * @return
+     * @param place - coordinate to be checked for collision
+     * @return - true if a collision occures in the place
      */
     public boolean collision(Coord place) {
        
@@ -201,7 +201,7 @@ public class Player implements KeyListener {
         return collisionOccured;
     }
    
-    //changing direction of moving depending on key actions (ARROW KEYS)
+        //change direction of moving depending on key actions (ARROW KEYS)
         @Override
         public void keyPressed(KeyEvent e)
         {
