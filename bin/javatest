@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# holds the source class name
+source_class=${1%.java}
+
+# compile the .java file
+javac -cp .:/usr/share/java/junit.jar "$source_class"Test.java
+if [[ $? != 0 ]]
+then
+	exit
+fi
+
+# run the unit tests
+junit "$source_class"Test
+
+# happy
+exit
+
