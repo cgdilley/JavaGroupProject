@@ -9,6 +9,7 @@
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import java.util.*;
 
 public class Sound extends Token {
    
@@ -50,30 +51,94 @@ public class Sound extends Token {
         return soundName;
     }
     
-        
-    /*
-     * Method to locate the Sound in the game
-     * @Override Token.locateToken()
-     */
-    public void locateToken()  {
-        int i = (int) (Math.random()*RANDOM_POS);
-        setTokenX(i*SOUND_SIZE);
-        
-        int j = (int) (Math.random()*RANDOM_POS);
-        setTokenY(i*SOUND_SIZE);
-        
-        sound = new Coord(getTokenX(), getTokenY());
-    }
-    
+     
     /*
      * Method for loading an image of a sound to render it to the screen
      * @Override Token.loadTokenImage()
      */
     public void loadTokenImage() {
-        ImageIcon image = new ImageIcon(getSound() + ".png");
-        soundPic = image.getImage();
+        ImageIcon image = new ImageIcon("Icons/Sound/" + getSound() + ".png");
+        tokenPic = image.getImage().getScaledInstance(Screen.GAME_COLUMN_WIDTH-(Screen.TOKEN_MARGINS*2), 
+                                                      Screen.GAME_ROW_HEIGHT-(Screen.TOKEN_MARGINS*2),
+                                                      Image.SCALE_SMOOTH);
     }
         
+    
+    /** Static method for generating a random sound
+      * @param difficulty - Limits the selection based on current game difficulty
+      * @return - The generated sound
+      */
+    public static Sound randomSound(GameState.Difficulty difficulty)
+    {
+      Sound sound = new Sound();   
+      int rVal = -1;
+      if (difficulty == GameState.Difficulty.EASY)
+        rVal = (int) Math.floor(Math.random()*23);
+      else if (difficulty == GameState.Difficulty.MEDIUM)
+        rVal = (int) Math.floor(Math.random()*(23+17));
+      else if (difficulty == GameState.Difficulty.HARD)
+        rVal = (int) Math.floor(Math.random()*(23+17+14));
+      
+      if (rVal==0) sound.p();
+      else if (rVal==1) sound.b();
+      else if (rVal==2) sound.t();
+      else if (rVal==3) sound.d();
+      else if (rVal==4) sound.thUnv();
+      else if (rVal==5) sound.thV();
+      else if (rVal==6) sound.s();
+      else if (rVal==7) sound.z();
+      else if (rVal==8) sound.shUnv();
+      else if (rVal==9) sound.shV();
+      else if (rVal==10) sound.ich();
+      else if (rVal==11) sound.ach();
+      else if (rVal==12) sound.flippedR();
+      else if (rVal==13) sound.l();
+      else if (rVal==14) sound.w();
+      else if (rVal==15) sound.j();
+      else if (rVal==16) sound.f();
+      else if (rVal==17) sound.v();
+      else if (rVal==18) sound.k();
+      else if (rVal==19) sound.g();
+      else if (rVal==20) sound.ng();
+      else if (rVal==21) sound.m();
+      else if (rVal==22) sound.n();
+      else if (rVal==23) sound.i();
+      else if (rVal==24) sound.shorti();
+      else if (rVal==25) sound.y();
+      else if (rVal==26) sound.shorty();
+      else if (rVal==27) sound.e();
+      else if (rVal==28) sound.shorte();
+      else if (rVal==29) sound.∆é();
+      else if (rVal==30) sound.ae();
+      else if (rVal==31) sound.schwa();
+      else if (rVal==32) sound.vocR();
+      else if (rVal==33) sound.u();
+      else if (rVal==34) sound.shortu();
+      else if (rVal==35) sound.o();
+      else if (rVal==36) sound.shorto();
+      else if (rVal==37) sound.shorta();
+      else if (rVal==38) sound.a();
+      else if (rVal==39) sound.ao();
+      else if (rVal==40) sound.bil();
+      else if (rVal==41) sound.den();
+      else if (rVal==42) sound.post();
+      else if (rVal==43) sound.pal();
+      else if (rVal==44) sound.lat();
+      else if (rVal==45) sound.bilimp();
+      else if (rVal==46) sound.denimp();
+      else if (rVal==47) sound.palimp();
+      else if (rVal==48) sound.velimp();
+      else if (rVal==49) sound.uvimp();
+      else if (rVal==50) sound.pBar();
+      else if (rVal==51) sound.tBar();
+      else if (rVal==52) sound.kBar();
+      else if (rVal==53) sound.sBar();
+      
+      sound.loadTokenImage();
+     
+      return sound;
+    }
+    
         
     /*
      * Create distinct sounds
@@ -272,7 +337,7 @@ public class Sound extends Token {
     }
     
     /*
-     * A String representation of the sound / è/
+     * A String representation of the sound / /
      */
     public void shorty() {
         setSound("shorty");
@@ -314,7 +379,7 @@ public class Sound extends Token {
     }
     
     /*
-     * A String representation of the sound /…ê/
+     * A String representation of the sound /…?/
      */
     public void vocR() {
         setSound("vocR");

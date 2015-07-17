@@ -11,23 +11,22 @@ import java.util.ArrayList;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.imageio.*;
+import java.io.*;
 
 public class Fruit extends Token {
    
-    private ArrayList<String> soundColl = new ArrayList(); //The collection of sounds which share a certain feature
+    private ArrayList<String> soundColl = new ArrayList<String>(); //The collection of sounds which share a certain feature
     private String sortOfFruit; //can be used as argument for the loadFruitImage() method
     private String task; //display the task to be fulfilled
     
-    private final int FRUIT_SIZE = 10;
-    private final int RANDOM_POS = 29;
-    public Image fruitPic;
     public Coord fruit;
     
     /*
      * Default constructor
      */
     public Fruit()  {
-        soundColl = null;
+        soundColl = new ArrayList<String>();
         sortOfFruit = "no sort of fruit";
         task = "no task";
     }
@@ -108,28 +107,61 @@ public class Fruit extends Token {
         
         return soundColl.contains(aName);
     }
-    
-    
-    /*
-     * Method to locate the Fruit in the game
-     * @Override Token.locateToken()
-     */
-    public void locateToken()  {
-        int i = (int) (Math.random()*RANDOM_POS);
-        setTokenX(i*FRUIT_SIZE);
-        
-        int j = (int) (Math.random()*RANDOM_POS);
-        setTokenY(i*FRUIT_SIZE);
-        
-        fruit = new Coord(getTokenX(), getTokenY());
-    }
-    
-    /*
+       
+     /*
      * Method for loading an image of a fruit to render it to the screen
      * @Override Token.loadTokenImage()
      */
     public void loadTokenImage() {
-        ImageIcon image = new ImageIcon(getSortOfFruit() + ".png");
-        fruitPic = image.getImage();
+      
+        ImageIcon image = new ImageIcon("Icons/Fruit/" + getSortOfFruit() + ".png");
+        tokenPic = image.getImage().getScaledInstance(Screen.GAME_COLUMN_WIDTH-(Screen.TOKEN_MARGINS*2), 
+                                                      Screen.GAME_ROW_HEIGHT-(Screen.TOKEN_MARGINS*2),
+                                                      Image.SCALE_SMOOTH);
     }
+    
+    
+    /** Static method for generating a random fruit
+      * @param difficulty - Limits the selection based on current game difficulty
+      * @return - The generated fruit
+      */
+    public static Fruit randomFruit(GameState.Difficulty difficulty)
+    {
+      ArrayList<Fruit> allFruits = new ArrayList<Fruit>();
+      
+      
+      allFruits.add(new Pear());
+      allFruits.add(new Pineapple());
+      allFruits.add(new Grape());
+      allFruits.add(new Tomato());
+      allFruits.add(new Watermelon());
+      allFruits.add(new Strawberry());
+      allFruits.add(new Cherry());
+      
+      if (difficulty != GameState.Difficulty.EASY)
+      {
+        allFruits.add(new Apple());
+        allFruits.add(new Banana());
+        allFruits.add(new Orange());
+        allFruits.add(new Eggplant());
+        allFruits.add(new Lemon());
+        allFruits.add(new Mushroom());
+        allFruits.add(new Radish());
+        allFruits.add(new Broccoli());
+      }
+      if (difficulty == GameState.Difficulty.HARD)
+      {
+        allFruits.add(new Salad());
+        allFruits.add(new Pumpkin());
+        allFruits.add(new Carrot());
+      }
+      
+      int rVal = (int) Math.floor(Math.random()*allFruits.size());
+      System.out.println(Integer.toString(rVal));
+      allFruits.get(rVal).loadTokenImage();
+      return allFruits.get(rVal);
+    }
+      
+      
+    
 }

@@ -43,6 +43,8 @@ public class Screen extends JPanel
   public static final Color PLAYER_COLOR_HEAD = new Color(0,255,0);  // Green
   public static final Color PLAYER_COLOR_TAIL = new Color(255,0,0);  // Red
   
+  public static final int TOKEN_MARGINS = 1;
+  
   
   
   ///// PRIVATE VARIABLES
@@ -50,44 +52,54 @@ public class Screen extends JPanel
   private JFrame frame;
   
   /** Constructor, requires a GameState object to refer to for rendering objects.
-    * @param game - GameState holding all data to render.
     */  
-  public Screen(GameState game)
+  public Screen()
   {
     super();
-    init(game);
+    //init(game);
+  }
+  
+  /** Connects the game state to the screen
+    * @param game - game state to connect
+    */
+  public void connectGame(GameState game)
+  {
+    this.game = game;
   }
   
   /** Initializes the screen with new JFrame, using default screen options.
     */
-  public void init(GameState game)
+  public JFrame init(GameState game)
   {
-    this.init(game, Screen.SCREEN_WIDTH, Screen.SCREEN_HEIGHT);
+    return this.init(game, Screen.SCREEN_WIDTH, Screen.SCREEN_HEIGHT);
   }
   
   /** Initializes the screen with new JFrame with given width and height.
     * @param width - Width of screen to create
     * @param height - Height of screen to create
     */
-  public void init(GameState game, int width, int height)
+  public JFrame init(GameState game, int width, int height)
   {
+    this.setPreferredSize( new Dimension(GAME_WIDTH + (GAME_MARGINS*2), GAME_HEIGHT + (GAME_MARGINS*2)) );
+    
     frame = new JFrame("Linguist Lizard");
     frame.add(this);
-    frame.setSize(width, height);
-    frame.setVisible(true);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
+    
     frame.addKeyListener(game.getPlayer());
     
     this.game = game;
+    
+    return frame;
   }
   
   /** Override of JPanel's paint method, handles all rendering.
     * @param g - Graphics object to manipulate for rendering objects.
     */
   @Override
-  public void paint(Graphics g)
+  public void paintComponent(Graphics g)
   {
-    super.paint(g);
+    super.paintComponent(g);
     
     Graphics2D g2d = (Graphics2D) g;
     
@@ -127,6 +139,16 @@ public class Screen extends JPanel
                                  GAME_MARGINS+PLAYER_MARGINS + (GAME_ROW_HEIGHT * elem.getY()),
                                  GAME_COLUMN_WIDTH - (PLAYER_MARGINS*2),
                                  GAME_ROW_HEIGHT - (PLAYER_MARGINS*2)));
+    }
+    
+    
+    for (Token tok : game.getTokens())
+    {
+      g.drawImage(tok.getImage(), 
+                  GAME_MARGINS + TOKEN_MARGINS + (GAME_COLUMN_WIDTH * tok.getCoord().getX()),
+                  GAME_MARGINS + TOKEN_MARGINS + (GAME_ROW_HEIGHT * tok.getCoord().getY()),
+                  null);
+      
     }
     
   }

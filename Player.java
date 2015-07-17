@@ -14,27 +14,39 @@ public class Player implements KeyListener {
    
     private Coord head; //head of the lizard, moving/controlled
     private ArrayList<Coord> tail; //array of tokens forming the tail of the lizard, follows head
-    private int direction; //direction of moving
+    private int direction, pendingDirection; //direction of moving
     public static final int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3; //values for direction
     private boolean collisionOccured; //if lizard walks into himself
-    private boolean gameOver = false; 
+    private boolean gameOver = false;
+    private boolean allowDirectionChange = true;
+    
    
     /**
      * Construct a new linguistic lizard.
      * Specify head coordinate, tail array and initial direction of moving.
      */
     public Player() {
-        head = new Coord(1,1);
+        head = new Coord(9,1);
         tail = new ArrayList<Coord>();
-        direction = RIGHT;
+        direction = DOWN;
+        pendingDirection = -1;
     }
-   
+    
+    /** Returns whether the player is dead or not.
+      * @return - Returns true of the player is dead.  False otherwise.
+      */
+    public boolean isDead()
+    {
+      return gameOver;
+    }
+    
     /**
      * Method to move the lizard one step in the current given direction. 
      */
     public void updatePlayer() {  
        
         Coord headPos = new Coord(head.getX(), head.getY());
+        allowDirectionChange = true;
         switch(direction)
         {
             case UP: if(!collision(head.getAbove(1)))//check if lizard would hit itself when moving there
@@ -72,6 +84,12 @@ public class Player implements KeyListener {
                         }
             default: gameOver = true;
         }
+        if (pendingDirection != -1)
+        {
+          direction = pendingDirection;
+          pendingDirection = -1;
+        }
+        
     }
    
     /**
@@ -170,11 +188,11 @@ public class Player implements KeyListener {
    
     /**
      * Remove given number of tokens from the END of the lizard's tail
-     * @param substract
+     * @param subtract
      */
-    public void substractFromTail(int substract) {
+    public void subtractFromTail(int subtract) {
        
-            for(int i = 0; i < substract; i++)
+            for(int i = 0; i < subtract; i++)
             {
                 if(!tail.isEmpty()) {
                     tail.remove(tail.get(tail.size() - 1));
@@ -205,22 +223,50 @@ public class Player implements KeyListener {
         @Override
         public void keyPressed(KeyEvent e)
         {
+          if (allowDirectionChange)
+          {
             if(e.getKeyCode()==KeyEvent.VK_UP && direction != DOWN)
             {
                 direction = UP;
+                allowDirectionChange = false;
             }
             if(e.getKeyCode()==KeyEvent.VK_DOWN && direction != UP)
             {
                 direction = DOWN;
+                allowDirectionChange = false;
             }
             if(e.getKeyCode()==KeyEvent.VK_LEFT && direction != RIGHT)
             {
                 direction = LEFT;
+                allowDirectionChange = false;
             }
             if(e.getKeyCode()==KeyEvent.VK_RIGHT && direction != LEFT)
             {
                 direction = RIGHT;
+                allowDirectionChange = false;
             }
+          } else {
+            if(e.getKeyCode()==KeyEvent.VK_UP && direction != DOWN)
+            {
+                pendingDirection = UP;
+                allowDirectionChange = false;
+            }
+            if(e.getKeyCode()==KeyEvent.VK_DOWN && direction != UP)
+            {
+                pendingDirection = DOWN;
+                allowDirectionChange = false;
+            }
+            if(e.getKeyCode()==KeyEvent.VK_LEFT && direction != RIGHT)
+            {
+                pendingDirection = LEFT;
+                allowDirectionChange = false;
+            }
+            if(e.getKeyCode()==KeyEvent.VK_RIGHT && direction != LEFT)
+            {
+                pendingDirection = RIGHT;
+                allowDirectionChange = false;
+            }
+          }
         }
    
        @Override

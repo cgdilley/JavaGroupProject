@@ -128,7 +128,7 @@ public class Coord
     * spaces.
     * Does NOT allow diagonal movement as a single coordinate movement.
     * @param coord - Coord to move towards.
-    * @param move - Number of coordinate spaces to move
+    * @param jump - Number of coordinate spaces to move
     * @return - New Coord that is 'jump' spaces closer to the given coord
     */
   public Coord getTowards(Coord coord, int jump)
@@ -160,6 +160,13 @@ public class Coord
     return returnCoord;
   }
   
+  /** Returns a String representation of the Coord object
+    * @return - The string representation
+    */
+  public String toString()
+  {
+    return ("["+Integer.toString(x)+","+Integer.toString(y)+"]");
+  }
     
   
   

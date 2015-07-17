@@ -19,20 +19,37 @@
 
 import java.util.*;
 import java.awt.event.*;
+import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.text.JTextComponent;
 
 public class GameState
 {
   
   public static enum Difficulty { EASY, MEDIUM, HARD }
   
-  public static final long PLAYER_DEFAULT_MOVE_DELAY = 200;
+  public static final long PLAYER_DEFAULT_MOVE_DELAY_EASY = 200;
+  public static final long FRUIT_DEFAULT_SPAWN_DELAY_EASY = 5000;
+  public static final long SOUND_DEFAULT_SPAWN_DELAY_EASY = 1000;
+  public static final long TOKEN_LIFESPAN = 20000;
+  
+  // How many grid squares away that tokens are allowed to spawn.
+  public static final int TOKEN_SPAWN_MIN_DISTANCE = 5;
+  
+  public static final int FRUIT_SCORE = 1000;
+  public static final int SOUND_RIGHT_SCORE = 5000;
+  public static final int SOUND_WRONG_SCORE = -8000;
+  
   
   private Player player;
   private ArrayList<Token> tokens;
   Difficulty difficulty;
-  Screen screen;
-  private long playerMoveDelay;
+  JPanel screen;
+  private long playerMoveDelay, fruitSpawnDelay, soundSpawnDelay;
+  private ArrayList<Timer> timers;
+  private JTextComponent messageOutput;
+  private Fruit currentFruit;
+  private int score;
   
   ///// CONSTRUCTORS
   /** Default constructor.
@@ -41,8 +58,10 @@ public class GameState
   {
     player = new Player();
     tokens = new ArrayList<Token>();
-    difficulty = Difficulty.EASY;
-    playerMoveDelay = PLAYER_DEFAULT_MOVE_DELAY;
+    setDifficulty(Difficulty.EASY);
+    timers = new ArrayList<Timer>();
+    currentFruit = null;
+    score = 0;
   }
   
   
@@ -54,6 +73,12 @@ public class GameState
   public void setDifficulty(Difficulty diff)
   {
     difficulty = diff;
+    if (diff == Difficulty.EASY)
+    {
+      playerMoveDelay = PLAYER_DEFAULT_MOVE_DELAY_EASY;
+      fruitSpawnDelay = FRUIT_DEFAULT_SPAWN_DELAY_EASY;
+      soundSpawnDelay = SOUND_DEFAULT_SPAWN_DELAY_EASY;
+    }
   }
   
   /** Gets the current game's difficulty level
@@ -86,37 +111,143 @@ public class GameState
     */
   public void start()
   {
-    initializeScreen();
-    performCountdown();
-    mainLoop();
+    generateInitialFruit();
+    startTimers();
+  }
+  
+  /** Connects the game state to the JPanel
+    */
+  public void connectScreen(JPanel screen)
+  {
+    this.screen = screen;
+  }
+  
+  /** Connects the game state to the text field to output messages to
+    * @param field - Text field to connect
+    */
+  public void connectMessageOutput(JTextComponent field)
+  {
+    messageOutput = field;
+  }
+  
+  /** Stops all timers and clears the timer list.
+    */
+  public void killTimers()
+  {
+    for (Timer t : timers)
+    {
+      t.stop();
+    }
+    timers.clear();
   }
   
   
   
   /// PRIVATE METHODS
   ///////////////////////////////////
-  /** MAIN LOOP.  Performs all repeated actions for processing and rendering the game.
+  /** Starts all the timers that perform the functions of the game.
     */
-  private void mainLoop()
+  private void startTimers()
   {
-    player.addToTail(6);  /// TEMP
     
-    Timer timer = new Timer((int)PLAYER_DEFAULT_MOVE_DELAY, new ActionListener() {
+    
+    
+    Timer playerTimer = new Timer((int)playerMoveDelay, new ActionListener() {
       public void actionPerformed(ActionEvent e) 
       {     
         player.updatePlayer();
-        testPlayerBounds(Screen.GAME_COLUMNS, Screen.GAME_ROWS);
+        testPlayerBounds(LinguistLizard.GAME_COLUMNS, LinguistLizard.GAME_ROWS);
+        if (player.collision(player.getHead()) || player.isDead())
+        {
+          killTimers();
+          messageOutput.setText("GAME OVER.\nScore = "+Integer.toString(score));
+        }
+        updateTokens();
         screen.repaint();
       }  
     });
-    timer.start();
+    playerTimer.start();
+    timers.add(playerTimer);
+    
+    Timer fruitSpawnTimer = new Timer((int)fruitSpawnDelay, new ActionListener() {
+      public void actionPerformed(ActionEvent e)
+      {
+        Fruit newFruit = Fruit.randomFruit(difficulty);
+        while (player.getTail().contains( newFruit.randomizeLocation() ) 
+                 || newFruit.getCoord().equals(player.getHead()));
+        newFruit.markSpawn();
+        tokens.add(newFruit);
+        screen.repaint();
+      }
+    });
+    fruitSpawnTimer.start();
+    timers.add(fruitSpawnTimer);
+    
+    Timer soundSpawnTimer = new Timer((int)soundSpawnDelay, new ActionListener() {
+      public void actionPerformed(ActionEvent e)
+      {
+        if (currentFruit != null)
+        {
+          Sound newSound = Sound.randomSound(difficulty);
+          while (player.getTail().contains( newSound.randomizeLocation() ) 
+                   || newSound.getCoord().equals(player.getHead()));
+          newSound.markSpawn();
+          tokens.add(newSound);
+          screen.repaint();
+        }
+      }
+    });
+    soundSpawnTimer.start();
+    timers.add(soundSpawnTimer);
+
+        
   }
   
-  /** Performs all actions required to initialize the screen.
+  /** Creates all the fruit that will exist on the board at the start of the game
     */
-  private void initializeScreen()
+  private void generateInitialFruit()
   {
-    screen = new Screen(this);
+    Fruit temp = new Cherry();
+    temp.setCoord(new Coord(1,12));
+    temp.loadTokenImage();
+    temp.markSpawn();
+    tokens.add(temp);
+    
+    temp = new Strawberry();
+    temp.setCoord(new Coord(4,12));
+    temp.loadTokenImage();
+    temp.markSpawn();
+    tokens.add(temp);
+    
+    temp = new Pear();
+    temp.setCoord(new Coord(7,12));
+    temp.loadTokenImage();
+    temp.markSpawn();
+    tokens.add(temp);
+    
+    temp = new Pineapple();
+    temp.setCoord(new Coord(10,12));
+    temp.loadTokenImage();
+    temp.markSpawn();
+    tokens.add(temp);
+    
+    temp = new Grape();
+    temp.setCoord(new Coord(13,12));
+    temp.loadTokenImage();
+    temp.markSpawn();
+    tokens.add(temp);
+    
+    temp = new Tomato();
+    temp.setCoord(new Coord(16,12));
+    temp.loadTokenImage();
+    temp.markSpawn();
+    tokens.add(temp);
+    
+    temp = new Watermelon();
+    temp.setCoord(new Coord(19,12));
+    temp.loadTokenImage();
+    temp.markSpawn();
+    tokens.add(temp);
   }
   
   /** Performs 3-2-1-go action before game begins
@@ -159,8 +290,25 @@ public class GameState
     */
   private void updateTokens()
   {
-    for (Token tok : tokens)
+    for (Iterator<Token> it = tokens.iterator(); it.hasNext(); )
     {
+      Token tok = it.next();
+      if (System.currentTimeMillis() - tok.spawnTime > TOKEN_LIFESPAN)
+        it.remove();
+      else
+      {        
+        if (player.getHead().equals(tok.getCoord()))
+        {
+          if (currentFruit == null)
+          {
+            onTokenEaten(tok);
+            tokens.clear();
+            break;
+          }
+          onTokenEaten(tok);
+          it.remove();
+        }
+      }
     }
   }
   
@@ -169,7 +317,26 @@ public class GameState
     */
   private void onTokenEaten(Token eatenToken)
   {
-    
+    if (eatenToken instanceof Fruit)
+    {
+      Fruit eatenFruit = (Fruit)eatenToken;
+      messageOutput.setText(eatenFruit.getTask());
+      currentFruit = eatenFruit;
+      score += FRUIT_SCORE;
+    }
+    else if (eatenToken instanceof Sound)
+    {
+      Sound eatenSound = (Sound)eatenToken;
+      if (currentFruit.getSoundColl().contains( eatenSound.getSound() ))
+      {
+        player.addToTail(1);
+        score += SOUND_RIGHT_SCORE;
+      } else {
+        player.subtractFromTail(2);
+        score += SOUND_WRONG_SCORE;
+      }
+    }
+      
   }
   
   
