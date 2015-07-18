@@ -293,6 +293,10 @@ public class GameState
     for (Iterator<Token> it = tokens.iterator(); it.hasNext(); )
     {
       Token tok = it.next();
+      if (currentFruit == null) // If a fruit has not been chosen, don't despawn tokens
+        tok.markSpawn();  
+      
+      
       if (System.currentTimeMillis() - tok.spawnTime > TOKEN_LIFESPAN)
         it.remove();
       else
