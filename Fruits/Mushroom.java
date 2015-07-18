@@ -22,6 +22,6 @@ public class Mushroom extends Fruit {
         mushroom.add("ao");
         super.setSoundColl(mushroom);
         super.setSortOfFruit("mushroom");
-        super.setTask("Collect only back vowels!");
+        super.setTask("Back vowels are waiting for you!");
         }
 }
