@@ -24,6 +24,6 @@ public class Banana extends Fruit {
         banana.add("j");   
         super.setSoundColl(banana);
         super.setSortOfFruit("banana");
-        super.setTask("Collect only sonorants!");
+        super.setTask("And now gather sonorants.");
     }
 }

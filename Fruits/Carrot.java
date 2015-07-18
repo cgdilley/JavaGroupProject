@@ -21,7 +21,7 @@ public class Carrot extends Fruit {
         carrot.add("sBar");
         super.setSoundColl(carrot);
         super.setSortOfFruit("carrot");
-        super.setTask("Collect only ejectives!");
+        super.setTask("How about to eat some ejectives?");
         }    
     
 }

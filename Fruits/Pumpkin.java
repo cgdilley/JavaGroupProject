@@ -21,7 +21,7 @@ public class Pumpkin extends Fruit {
         pumpkin.add("uvimp");
         super.setSoundColl(pumpkin);
         super.setSortOfFruit("pumpkin");
-        super.setTask("Collect only voiced implosives!");
+        super.setTask("Have a snack with the voiced implosives.");
         }    
     
 }

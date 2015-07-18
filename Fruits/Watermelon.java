@@ -20,6 +20,6 @@ public class Watermelon extends Fruit {
         watermelon.add("w");    
         super.setSoundColl(watermelon);
         super.setSortOfFruit("watermelon");
-        super.setTask("Collect only approximants!");
+        super.setTask("Faster, eat the approximants!");
     }
 }

@@ -25,6 +25,6 @@ public class Pineapple extends Fruit {
         pineapple.add("k");    
         super.setSoundColl(pineapple);
         super.setSortOfFruit("pineapple");
-        super.setTask("Collect only unvoiced consonants!");
+        super.setTask("Gather the unvoiced consonants!");
     }
 }

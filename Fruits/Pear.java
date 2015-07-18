@@ -30,6 +30,6 @@ public class Pear extends Fruit {
         pear.add("n");    
         super.setSoundColl(pear);
         super.setSortOfFruit("pear");
-        super.setTask("Collect only voiced consonants!");
+        super.setTask("Take care of the voiced consonants!");
     }
 }

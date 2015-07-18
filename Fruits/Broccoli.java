@@ -23,7 +23,7 @@ public class Broccoli extends Fruit {
         broccoli.add("shorto");
         super.setSoundColl(broccoli);
         super.setSortOfFruit("broccoli");
-        super.setTask("Collect only close-mid and open-mid vowels!");
+        super.setTask("Go to close-mid and open-mid vowels");
         }    
     
 }

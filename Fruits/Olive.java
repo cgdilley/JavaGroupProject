@@ -19,7 +19,7 @@ public class Olive extends Fruit {
         olive.add("m");
         super.setSoundColl(olive);
         super.setSortOfFruit("olive");
-        super.setTask("Collect only bilabial consonants!");
+        super.setTask("You must swallow the bilabial consonants!");
     }
     
 }

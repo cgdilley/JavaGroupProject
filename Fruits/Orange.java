@@ -23,6 +23,6 @@ public class Orange extends Fruit {
         orange.add("ae");
         super.setSoundColl(orange);
         super.setSortOfFruit("orange");
-        super.setTask("Collect only front vowels!");
+        super.setTask("Have a breakfast with front vowels!");
         }
 }

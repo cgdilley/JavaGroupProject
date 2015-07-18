@@ -22,7 +22,7 @@ public class Radish extends Fruit {
         radish.add("shortu");
         super.setSoundColl(radish);
         super.setSortOfFruit("radish");
-        super.setTask("Collect only high vowels!");
+        super.setTask("Digest the high vowels!");
         }    
     
 }

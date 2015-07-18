@@ -20,7 +20,7 @@ public class Cabbage extends Fruit {
         cabbage.add("ng");
         super.setSoundColl(cabbage);
         super.setSortOfFruit("cabbage");
-        super.setTask("Collect only velar consonants!");
+        super.setTask("Bite these naughty velars!");
     }
     
 }
