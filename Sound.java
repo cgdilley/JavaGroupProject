@@ -108,7 +108,7 @@ public class Sound extends Token {
       else if (rVal==26) sound.shorty();
       else if (rVal==27) sound.e();
       else if (rVal==28) sound.shorte();
-      else if (rVal==29) sound.Ǝ();
+      else if (rVal==29) sound.ethree();
       else if (rVal==30) sound.ae();
       else if (rVal==31) sound.schwa();
       else if (rVal==32) sound.vocR();
@@ -178,14 +178,14 @@ public class Sound extends Token {
     }
     
     /*
-     * A String representation of the sound /θ/
+     * A String representation of the sound /Î¸/
      */
     public void thUnv() {
         setSound("thUnv");
     }
     
     /*
-     * A String representation of the sound /ð/
+     * A String representation of the sound /Ã°/
      */
     public void thV() {
         setSound("thV");
@@ -206,21 +206,21 @@ public class Sound extends Token {
     }
     
     /*
-     * A String representation of the sound /ʃ/
+     * A String representation of the sound /Êƒ/
      */
     public void shUnv() {
         setSound("shUnv");
     }
     
     /*
-     * A String representation of the sound /ʒ/
+     * A String representation of the sound /Ê’/
      */
     public void shV() {
         setSound("shV");
     }
     
     /*
-     * A String representation of the sound /ç/
+     * A String representation of the sound /Ã§/
      */
     public void ich() {
         setSound("ich");
@@ -234,7 +234,7 @@ public class Sound extends Token {
     }
     
     /*
-     * A String representation of the sound /ɹ/
+     * A String representation of the sound /É¹/
      */
     public void flippedR() {
         setSound("flippedR");
@@ -290,7 +290,7 @@ public class Sound extends Token {
     }
     
     /*
-     * A String representation of the sound /ŋ/
+     * A String representation of the sound /Å‹/
      */
     public void ng() {
         setSound("ng");
@@ -312,7 +312,7 @@ public class Sound extends Token {
     
     
     /*
-     * Vowels: i-shorti, y-shorty, e, shorte, Ǝ, ae, schwa, vocR, u-shortu, o-shortu, shorta, a, ao
+     * Vowels: i-shorti, y-shorty, e, shorte, ethree, ae, schwa, vocR, u-shortu, o-shortu, shorta, a, ao
      */
     
     /*
@@ -323,7 +323,7 @@ public class Sound extends Token {
     }
     
     /*
-     * A String representation of the sound /ɪ/
+     * A String representation of the sound /Éª/
      */
     public void shorti() {
         setSound("shorti");
@@ -337,7 +337,7 @@ public class Sound extends Token {
     }
     
     /*
-     * A String representation of the sound /�/
+     * A String representation of the sound /Ê/
      */
     public void shorty() {
         setSound("shorty");
@@ -351,35 +351,35 @@ public class Sound extends Token {
     }
     
     /*
-     * A String representation of the sound /ɛ/
+     * A String representation of the sound /É›/
      */
     public void shorte() {
         setSound("shorte");
     }
     
     /*
-     * A String representation of the sound /ɜ/
+     * A String representation of the sound /Éœ/
      */
-    public void Ǝ() {
-        setSound("Ǝ");
+    public void ethree() {
+        setSound("ethree");
     }
     
     /*
-     * A String representation of the sound /æ/
+     * A String representation of the sound /Ã¦/
      */
     public void ae() {
         setSound("ae");
     }
     
     /*
-     * A String representation of the sound /ɘ/
+     * A String representation of the sound /É˜/
      */
     public void schwa() {
         setSound("schwa");
     }
     
     /*
-     * A String representation of the sound /�?/
+     * A String representation of the sound /É?/
      */
     public void vocR() {
         setSound("vocR");
@@ -393,7 +393,7 @@ public class Sound extends Token {
     }
     
     /*
-     * A String representation of the sound /ʊ/
+     * A String representation of the sound /ÊŠ/
      */
     public void shortu() {
         setSound("shortu");
@@ -407,28 +407,28 @@ public class Sound extends Token {
     }
     
     /*
-     * A String representation of the sound /ɔ/
+     * A String representation of the sound /É”/
      */
     public void shorto() {
         setSound("shorto");
     }
     
     /*
-     * A String representation of the sound /Ʌ/
+     * A String representation of the sound /É…/
      */
     public void shorta() {
         setSound("shorta");
     }
     
     /*
-     * A String representation of the sound /ɑ/
+     * A String representation of the sound /É‘/
      */
     public void a() {
         setSound("a");
     }
     
     /*
-     * A String representation of the sound /ɒ/
+     * A String representation of the sound /É’/
      */
     public void ao() {
         setSound("ao");
@@ -440,7 +440,7 @@ public class Sound extends Token {
      */
     
     /*
-     * A String representation of the sound /ʘ/
+     * A String representation of the sound /Ê˜/
      */
     public void bil() {
         setSound("bil");
@@ -461,14 +461,14 @@ public class Sound extends Token {
     }
     
     /*
-     * A String representation of the sound /ǂ/
+     * A String representation of the sound /Ç‚/
      */
     public void pal() {
         setSound("pal");
     }
             
     /*
-     * A String representation of the sound /║/
+     * A String representation of the sound /â•‘/
      */
     public void lat() {
         setSound("lat");
@@ -480,35 +480,35 @@ public class Sound extends Token {
      */
     
     /*
-     * A String representation of the sound /ɓ/
+     * A String representation of the sound /É“/
      */
     public void bilimp() {
         setSound("bilimp");
     }
     
     /*
-     * A String representation of the sound /ɗ /
+     * A String representation of the sound /É—â€‰/
      */
     public void denimp() {
         setSound("denimp");
     }
     
     /*
-     * A String representation of the sound /ʄ/
+     * A String representation of the sound /Ê„/
      */
     public void palimp() {
         setSound("palimp");
     }
     
     /*
-     * A String representation of the sound /ɠ/
+     * A String representation of the sound /É /
      */
     public void velimp() {
         setSound("velimp");
     }
             
     /*
-     * A String representation of the sound /ʛ/
+     * A String representation of the sound /Ê›/
      */
     public void uvimp() {
         setSound("uvimp");
