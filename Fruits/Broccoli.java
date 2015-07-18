@@ -16,7 +16,7 @@ public class Broccoli extends Fruit {
         ArrayList<String> broccoli = new ArrayList<>();
         broccoli.add("e");
         broccoli.add("shorte");
-        broccoli.add("Ǝ");
+        broccoli.add("ethree");
         broccoli.add("schwa");
         broccoli.add("vocR");
         broccoli.add("o");
