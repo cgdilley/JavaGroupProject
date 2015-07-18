@@ -19,6 +19,6 @@ public class Strawberry extends Fruit {
         strawberry.add("ng");    
         super.setSoundColl(strawberry);
         super.setSortOfFruit("strawberry");
-        super.setTask("Collect only nasals!");
+        super.setTask("You have to assemble the nasals!");
     }
 }
