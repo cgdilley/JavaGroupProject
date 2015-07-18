@@ -26,7 +26,7 @@ public class Tomato extends Fruit {
         tomato.add("v");
         super.setSoundColl(tomato);
         super.setSortOfFruit("tomato");
-        super.setTask("Collect only fricatives!");
+        super.setTask("Reach the fricatives!");
     }
         
 }
