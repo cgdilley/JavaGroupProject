@@ -21,7 +21,7 @@ public class Salad extends Fruit {
         salad.add("lat");
         super.setSoundColl(salad);
         super.setSortOfFruit("salad");
-        super.setTask("Collect only clicks!");
+        super.setTask("Time to make some salad from the clicks.");
         }    
     
 }
