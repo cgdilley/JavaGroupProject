@@ -23,6 +23,6 @@ public class Eggplant extends Fruit {
         eggplant.add("ao");
         super.setSoundColl(eggplant);
         super.setSortOfFruit("eggplant");
-        super.setTask("Collect only rounded vowels!");
+        super.setTask("Have a dinner with rounded vowels!");
         }
 }
