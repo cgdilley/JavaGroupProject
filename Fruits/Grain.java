@@ -20,7 +20,7 @@ public class Grain extends Fruit {
         grain.add("v");
         super.setSoundColl(grain);
         super.setSortOfFruit("grain");
-        super.setTask("Collect only (labio-)dental consonants!");
+        super.setTask("Pick up the (labio-)dentals.");
     }
     
 }
