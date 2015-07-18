@@ -22,6 +22,6 @@ public class Grape extends Fruit {
         grape.add("g");    
         super.setSoundColl(grape);
         super.setSortOfFruit("grape");
-        super.setTask("Collect only plosives!");
+        super.setTask("Congregate all the plosives!");
     }
 }
