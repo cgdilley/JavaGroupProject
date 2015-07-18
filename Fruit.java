@@ -19,9 +19,7 @@ public class Fruit extends Token {
     private ArrayList<String> soundColl = new ArrayList<String>(); //The collection of sounds which share a certain feature
     private String sortOfFruit; //can be used as argument for the loadFruitImage() method
     private String task; //display the task to be fulfilled
-    
-    public Coord fruit;
-    
+     
     /*
      * Default constructor
      */
@@ -109,7 +107,7 @@ public class Fruit extends Token {
     }
        
      /*
-     * Method for loading an image of a fruit to render it to the screen
+     * Method for loading an image of a fruit to render it to the screen, and resize it as needed.
      * @Override Token.loadTokenImage()
      */
     public void loadTokenImage() {
@@ -129,7 +127,9 @@ public class Fruit extends Token {
     {
       ArrayList<Fruit> allFruits = new ArrayList<Fruit>();
       
+      // Assemble list of possible fruits to choose from.
       
+      // Fruits for EASY-MEDIUM-HARD
       allFruits.add(new Pear());
       allFruits.add(new Pineapple());
       allFruits.add(new Grape());
@@ -138,6 +138,7 @@ public class Fruit extends Token {
       allFruits.add(new Strawberry());
       allFruits.add(new Cherry());
       
+      // Fruits for MEDIUM-HARD
       if (difficulty != GameState.Difficulty.EASY)
       {
         allFruits.add(new Apple());
@@ -149,6 +150,8 @@ public class Fruit extends Token {
         allFruits.add(new Radish());
         allFruits.add(new Broccoli());
       }
+      
+      // Fruits for HARD
       if (difficulty == GameState.Difficulty.HARD)
       {
         allFruits.add(new Salad());
@@ -156,6 +159,7 @@ public class Fruit extends Token {
         allFruits.add(new Carrot());
       }
       
+      // Randomly select a fruit from this list and return it
       int rVal = (int) Math.floor(Math.random()*allFruits.size());
       System.out.println(Integer.toString(rVal));
       allFruits.get(rVal).loadTokenImage();

@@ -14,11 +14,17 @@ public class Player implements KeyListener {
    
     private Coord head; //head of the lizard, moving/controlled
     private ArrayList<Coord> tail; //array of tokens forming the tail of the lizard, follows head
-    private int direction, pendingDirection; //direction of moving
+    private int direction; //direction of moving
     public static final int UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3; //values for direction
     private boolean collisionOccured; //if lizard walks into himself
     private boolean gameOver = false;
-    private boolean allowDirectionChange = true;
+    
+    // These variables are to facilitate smoother input response.  Without it, multiple direction changes to direction
+    //  can be made without the player having moved, with unpredictable results.  However, movement commands can be
+    //  "buffered" in pendingDirection to be applied after the next player movement so that the game doesn't completely 
+    //  ignore commands.  Without this buffering, input feels very hit or miss.
+    private int pendingDirection;
+    private boolean allowDirectionChange = true;  
     
    
     /**
@@ -46,7 +52,7 @@ public class Player implements KeyListener {
     public void updatePlayer() {  
        
         Coord headPos = new Coord(head.getX(), head.getY());
-        allowDirectionChange = true;
+        allowDirectionChange = true;  // Toggle the player to allow accepting direction change inputs again
         switch(direction)
         {
             case UP: if(!collision(head.getAbove(1)))//check if lizard would hit itself when moving there
@@ -84,7 +90,7 @@ public class Player implements KeyListener {
                         }
             default: gameOver = true;
         }
-        if (pendingDirection != -1)
+        if (pendingDirection != -1)  // If there is a pending direction change, apply it
         {
           direction = pendingDirection;
           pendingDirection = -1;
@@ -223,12 +229,12 @@ public class Player implements KeyListener {
         @Override
         public void keyPressed(KeyEvent e)
         {
-          if (allowDirectionChange)
+          if (allowDirectionChange)  // If this is the first direction change request since the last player update
           {
             if(e.getKeyCode()==KeyEvent.VK_UP && direction != DOWN)
             {
                 direction = UP;
-                allowDirectionChange = false;
+                allowDirectionChange = false;  // Disallow further direciton changes until the player is updated
             }
             if(e.getKeyCode()==KeyEvent.VK_DOWN && direction != UP)
             {
@@ -245,26 +251,23 @@ public class Player implements KeyListener {
                 direction = RIGHT;
                 allowDirectionChange = false;
             }
-          } else {
+          } else {  // If a new direction has already been given since the last time the player was updated, queue up
+                    //  this movement command to applied after the player is updated.
             if(e.getKeyCode()==KeyEvent.VK_UP && direction != DOWN)
             {
                 pendingDirection = UP;
-                allowDirectionChange = false;
             }
             if(e.getKeyCode()==KeyEvent.VK_DOWN && direction != UP)
             {
                 pendingDirection = DOWN;
-                allowDirectionChange = false;
             }
             if(e.getKeyCode()==KeyEvent.VK_LEFT && direction != RIGHT)
             {
                 pendingDirection = LEFT;
-                allowDirectionChange = false;
             }
             if(e.getKeyCode()==KeyEvent.VK_RIGHT && direction != LEFT)
             {
                 pendingDirection = RIGHT;
-                allowDirectionChange = false;
             }
           }
         }

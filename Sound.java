@@ -14,11 +14,7 @@ import java.util.*;
 public class Sound extends Token {
    
     private String soundName; //can be used as argument for the loadSoundImage() method
-    private final int SOUND_SIZE = 10;
-    private final int RANDOM_POS = 29;
-    public Image soundPic;    
-    public Coord sound;
-    
+     
     
     /*
      * Construct an empty Sound object
@@ -53,7 +49,7 @@ public class Sound extends Token {
     
      
     /*
-     * Method for loading an image of a sound to render it to the screen
+     * Method for loading an image of a sound to render it to the screen, and resizing it as needed.
      * @Override Token.loadTokenImage()
      */
     public void loadTokenImage() {
@@ -72,6 +68,7 @@ public class Sound extends Token {
     {
       Sound sound = new Sound();   
       int rVal = -1;
+      // Generate a random number representing a sound.  Higher difficulties include higher number of sounds.
       if (difficulty == GameState.Difficulty.EASY)
         rVal = (int) Math.floor(Math.random()*23);
       else if (difficulty == GameState.Difficulty.MEDIUM)
@@ -79,6 +76,7 @@ public class Sound extends Token {
       else if (difficulty == GameState.Difficulty.HARD)
         rVal = (int) Math.floor(Math.random()*(23+17+14));
       
+      // Apply the randomly selected sound
       if (rVal==0) sound.p();
       else if (rVal==1) sound.b();
       else if (rVal==2) sound.t();
@@ -134,6 +132,7 @@ public class Sound extends Token {
       else if (rVal==52) sound.kBar();
       else if (rVal==53) sound.sBar();
       
+      // Load the token's image
       sound.loadTokenImage();
      
       return sound;

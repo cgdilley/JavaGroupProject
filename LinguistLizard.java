@@ -57,10 +57,11 @@ public class LinguistLizard extends JPanel {
    }
    
     public void window (){ // creation of the game frame
-     game = new GameState(); 
+      
+     game = new GameState(); // Initialize the game state
      
-     screen = new Screen(); 
-     frame = screen.init(game);
+     screen = new Screen();  // Initialize the screen area where the game will be drawn
+     frame = screen.init(game);  // Initialize the screen with the game state, and get the resulting JFrame object
      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
      frame.setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
      frame.setResizable(false);
@@ -87,9 +88,15 @@ public class LinguistLizard extends JPanel {
              System.exit(0);
      }}); 
    
-     currentDifficulty = GameState.Difficulty.EASY;
+     
+     currentDifficulty = game.getDifficulty();  // Set default difficulty
      JMenu difficulty = new JMenu ("Difficulty");//creates the second menu with the range of difficulty levels
      menubar.add(difficulty);
+     
+     // Each item in this difficulty menu contains an action listener which changes the difficulty of the currently
+     //  running game, and forces the game to restart its timers with the new difficulty's values.  Also the difficulty
+     //  is stored locally so that if the game is restarted, the difficulty level persists and is applied to the new
+     //  GameState.
      JMenuItem easy = new JMenuItem ("Easy");//adds the first difficulty level to the second menu
      easy.addActionListener(new ActionListener() {
        public void actionPerformed(ActionEvent e) {
@@ -108,7 +115,7 @@ public class LinguistLizard extends JPanel {
        }
      });
      difficulty.add(medium);
-     JMenuItem hard = new JMenuItem ("Hard");//adds the first difficulty level to the second menu
+     JMenuItem hard = new JMenuItem ("Hard");//adds the third difficulty level to the second menu
      hard.addActionListener(new ActionListener() {
        public void actionPerformed(ActionEvent e) {
          game.setDifficulty(GameState.Difficulty.HARD);
@@ -119,33 +126,33 @@ public class LinguistLizard extends JPanel {
      difficulty.add(hard);
     
    
-     gameMessage = new JTextArea("Choose a fruit"); // create JTextField with the first task
+     gameMessage = new JTextArea("Choose a fruit"); // create JTextField to display tasks
      gameMessage.setPreferredSize( new Dimension( 200, 50 ) );
      gameMessage.setLineWrap(true);
-
-
      gameMessage.setEditable(false); // Indicates that this textfield is not editable
      gameMessage.setSize(300, 300);
    
      frame.setJMenuBar(menubar);//sets the menubar to hte frame
-     //frame.getContentPane().setLayout(new FlowLayout());    
      frame.add(gameMessage, BorderLayout.EAST);// add textfield to frame
      frame.setVisible(true);
      
-     game.connectScreen(screen);
+     game.connectScreen(screen);  // Connect the screen and the message box to the game state
      game.connectMessageOutput(gameMessage);
+     
+     // START THE GAME
      game.start();
 
     }
   /**
   * Method which helps to restart the game
-  * after the "Reastart" menu item was clicked
+  * after the "Restart" menu item was clicked
   */
     public void restart() {
-      frame.removeKeyListener(game.getPlayer());
-      
+      // Properly destroy the last game
+      frame.removeKeyListener(game.getPlayer());      
       game.killTimers();
       
+      // Initialize new game state, connect everything to it, and set its difficulty
       game = new GameState();
       frame.addKeyListener(game.getPlayer());
       game.connectScreen(screen);
@@ -155,6 +162,7 @@ public class LinguistLizard extends JPanel {
       
       gameMessage.setText("Choose a fruit");
       
+      // START THE GAME
       game.start();
     }   
     
@@ -164,8 +172,6 @@ public class LinguistLizard extends JPanel {
   */
    public static void main(String[] args) {
      new LinguistLizard().window();
-//LinguistLizard ll = new LinguistLizard ();
-//ll.window();
 
    }
    }

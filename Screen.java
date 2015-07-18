@@ -2,8 +2,8 @@
   * 
   * Used for creating the JFrame and rendering all graphics for the game.
   * 
-  * by:
-  * modified by:  Christopher Dilley
+  * by:  Christopher Dilley
+  * modified by:  
   * for:  Java Group Project (2015)
   * 
   * CHANGELOG:
@@ -13,6 +13,8 @@
   *            code for rendering tail elements, but is not currently active.
   * 10.07.15 - Activated code for rendering tail
   * 13.07.15 - Changed paintComponent() back to paint().  Not sure it actually matters.
+  * 17.07.15 - Changed paint back to paintComponent().  It mattered.  Added code for rendering tokens and modified
+  *             initialization to integrate with the swing window.
   */
 
 import java.awt.*;
@@ -68,6 +70,7 @@ public class Screen extends JPanel
   }
   
   /** Initializes the screen with new JFrame, using default screen options.
+    * @param game - GameState to connect
     */
   public JFrame init(GameState game)
   {
@@ -75,6 +78,7 @@ public class Screen extends JPanel
   }
   
   /** Initializes the screen with new JFrame with given width and height.
+    * @param game - GameState to connect
     * @param width - Width of screen to create
     * @param height - Height of screen to create
     */
@@ -82,11 +86,10 @@ public class Screen extends JPanel
   {
     this.setPreferredSize( new Dimension(GAME_WIDTH + (GAME_MARGINS*2), GAME_HEIGHT + (GAME_MARGINS*2)) );
     
-    frame = new JFrame("Linguist Lizard");
-    frame.add(this);
+    frame = new JFrame("Linguist Lizard");  // Create the frame and add this screen to it.
+    frame.add(this);   
     
-    
-    frame.addKeyListener(game.getPlayer());
+    frame.addKeyListener(game.getPlayer());  
     
     this.game = game;
     
@@ -141,7 +144,7 @@ public class Screen extends JPanel
                                  GAME_ROW_HEIGHT - (PLAYER_MARGINS*2)));
     }
     
-    
+    // Loop through all tokens and draw their images at their coordinates with similar math as above.
     for (Token tok : game.getTokens())
     {
       g.drawImage(tok.getImage(), 
@@ -151,14 +154,6 @@ public class Screen extends JPanel
       
     }
     
-  }
-  
-  /** Return whether JFrame is active or not.
-    * @return - Returns true if JFrame is active, false otherwise.
-    */
-  public boolean isOpen()
-  {
-    return frame.isActive();
   }
   
   

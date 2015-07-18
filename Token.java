@@ -25,6 +25,7 @@ public class Token {
     public Coord randomizeLocation()  {
       if (coord==null)
         coord = new Coord();
+      // Find a random coordinate on the board within the set boundaries
       coord.set((int) Math.floor(Math.random()*Screen.GAME_COLUMNS), 
                   (int) Math.floor(Math.random()*Screen.GAME_ROWS));     
         
@@ -63,7 +64,7 @@ public class Token {
       return tokenPic;
     }
     
-    /** Sets the spawn time for this token
+    /** Sets the spawned time for this token
       */
     public void markSpawn()
     {
