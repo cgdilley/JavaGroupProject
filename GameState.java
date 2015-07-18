@@ -162,6 +162,17 @@ public class GameState
           killTimers();
           messageOutput.setText("GAME OVER.\nScore = "+Integer.toString(score));
         }
+		
+		// update the server
+		Score s = new Score("", score);
+		s.obtainPlayerName(SwingUtilities.getWindowAncestor(screen));
+		/*if(s.send() == 200) {
+			
+		}
+		else {
+			
+		}*/
+		
         updateTokens();
         screen.repaint();
       }  
