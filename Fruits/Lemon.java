@@ -18,7 +18,7 @@ public class Lemon extends Fruit {
         lemon.add("shorti");
         lemon.add("e");
         lemon.add("shorte");
-        lemon.add("Ǝ");
+        lemon.add("ethree");
         lemon.add("ae");
         lemon.add("schwa");
         lemon.add("shorta");
