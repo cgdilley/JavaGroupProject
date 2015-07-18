@@ -26,6 +26,6 @@ public class Cherry extends Fruit {
         cherry.add("n");   
         super.setSoundColl(cherry);
         super.setSortOfFruit("cherry");
-        super.setTask("Collect only (post-)alveolar consonants!");
+        super.setTask("Lizard, attack the (post-)alveolars!");
         }
 }
