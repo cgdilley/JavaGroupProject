@@ -94,6 +94,7 @@ public class LinguistLizard extends JPanel {
      easy.addActionListener(new ActionListener() {
        public void actionPerformed(ActionEvent e) {
          game.setDifficulty(GameState.Difficulty.EASY);
+         game.restartTimers();
          currentDifficulty = GameState.Difficulty.EASY;
        }
      });
@@ -102,6 +103,7 @@ public class LinguistLizard extends JPanel {
      medium.addActionListener(new ActionListener() {
        public void actionPerformed(ActionEvent e) {
          game.setDifficulty(GameState.Difficulty.MEDIUM);
+         game.restartTimers();
          currentDifficulty = GameState.Difficulty.MEDIUM;
        }
      });
@@ -110,6 +112,7 @@ public class LinguistLizard extends JPanel {
      hard.addActionListener(new ActionListener() {
        public void actionPerformed(ActionEvent e) {
          game.setDifficulty(GameState.Difficulty.HARD);
+         game.restartTimers();
          currentDifficulty = GameState.Difficulty.HARD;
        }
      });

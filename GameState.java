@@ -28,18 +28,18 @@ public class GameState
   
   public static enum Difficulty { EASY, MEDIUM, HARD }
   
-  public static final long PLAYER_DEFAULT_MOVE_DELAY_EASY = 200;
+  public static final long PLAYER_DEFAULT_MOVE_DELAY_EASY = 400;
   public static final long FRUIT_DEFAULT_SPAWN_DELAY_EASY = 5000;
   public static final long SOUND_DEFAULT_SPAWN_DELAY_EASY = 1000;
-  public static final long PLAYER_DEFAULT_MOVE_DELAY_MEDIUM = 200;
+  public static final long PLAYER_DEFAULT_MOVE_DELAY_MEDIUM = 250;
   public static final long FRUIT_DEFAULT_SPAWN_DELAY_MEDIUM = 5000;
   public static final long SOUND_DEFAULT_SPAWN_DELAY_MEDIUM = 1000;
-  public static final long PLAYER_DEFAULT_MOVE_DELAY_HARD = 200;
+  public static final long PLAYER_DEFAULT_MOVE_DELAY_HARD = 150;
   public static final long FRUIT_DEFAULT_SPAWN_DELAY_HARD = 5000;
   public static final long SOUND_DEFAULT_SPAWN_DELAY_HARD = 1000;
   public static final double SCORE_MULT_EASY = 1.0;
-  public static final double SCORE_MULT_MEDIUM = 1.5;
-  public static final double SCORE_MULT_HARD = 2.0;
+  public static final double SCORE_MULT_MEDIUM = 2.0;
+  public static final double SCORE_MULT_HARD = 4.0;
     
   public static final long TOKEN_LIFESPAN = 20000;
   
@@ -105,7 +105,7 @@ public class GameState
       fruitSpawnDelay = FRUIT_DEFAULT_SPAWN_DELAY_HARD;
       soundSpawnDelay = SOUND_DEFAULT_SPAWN_DELAY_HARD;
       scoreMult = SCORE_MULT_HARD;
-    }
+    }    
   }
   
   /** Gets the current game's difficulty level
@@ -167,6 +167,16 @@ public class GameState
     }
     timers.clear();
   }
+  
+  /** Stops all timers and clears the timer list, then regenerates the timer list.
+    * Mostly used for after the difficulty changes.
+    */
+  public void restartTimers()
+  {
+    killTimers();
+    startTimers();
+  }
+    
   
   
   
