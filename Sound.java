@@ -407,7 +407,7 @@ public class Sound extends Token {
     }
     
     /*
-     * A String representation of the sound /É”/
+     * A String representation of the sound /É�/
      */
     public void shorto() {
         setSound("shorto");

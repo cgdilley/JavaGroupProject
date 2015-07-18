@@ -45,7 +45,7 @@ public class LinguistLizard extends JPanel {
    private JFrame frame;
    private JTextArea gameMessage;
    Screen screen;
-   
+   private GameState.Difficulty currentDifficulty;
   /**
  *Creation of the main Game window
  * with the main menu and JMenu items 
@@ -87,12 +87,14 @@ public class LinguistLizard extends JPanel {
              System.exit(0);
      }}); 
    
+     currentDifficulty = GameState.Difficulty.EASY;
      JMenu difficulty = new JMenu ("Difficulty");//creates the second menu with the range of difficulty levels
      menubar.add(difficulty);
      JMenuItem easy = new JMenuItem ("Easy");//adds the first difficulty level to the second menu
      easy.addActionListener(new ActionListener() {
        public void actionPerformed(ActionEvent e) {
          game.setDifficulty(GameState.Difficulty.EASY);
+         currentDifficulty = GameState.Difficulty.EASY;
        }
      });
      difficulty.add(easy);
@@ -100,6 +102,7 @@ public class LinguistLizard extends JPanel {
      medium.addActionListener(new ActionListener() {
        public void actionPerformed(ActionEvent e) {
          game.setDifficulty(GameState.Difficulty.MEDIUM);
+         currentDifficulty = GameState.Difficulty.MEDIUM;
        }
      });
      difficulty.add(medium);
@@ -107,6 +110,7 @@ public class LinguistLizard extends JPanel {
      hard.addActionListener(new ActionListener() {
        public void actionPerformed(ActionEvent e) {
          game.setDifficulty(GameState.Difficulty.HARD);
+         currentDifficulty = GameState.Difficulty.HARD;
        }
      });
      difficulty.add(hard);
@@ -142,7 +146,11 @@ public class LinguistLizard extends JPanel {
       game = new GameState();
       frame.addKeyListener(game.getPlayer());
       game.connectScreen(screen);
+      game.connectMessageOutput(gameMessage);
       screen.connectGame(game);
+      game.setDifficulty(currentDifficulty);
+      
+      gameMessage.setText("Choose a fruit");
       
       game.start();
     }   

@@ -19,7 +19,7 @@
 
 import java.util.*;
 import java.awt.event.*;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.Timer;
 import javax.swing.text.JTextComponent;
 
@@ -31,7 +31,18 @@ public class GameState
   public static final long PLAYER_DEFAULT_MOVE_DELAY_EASY = 200;
   public static final long FRUIT_DEFAULT_SPAWN_DELAY_EASY = 5000;
   public static final long SOUND_DEFAULT_SPAWN_DELAY_EASY = 1000;
+  public static final long PLAYER_DEFAULT_MOVE_DELAY_MEDIUM = 200;
+  public static final long FRUIT_DEFAULT_SPAWN_DELAY_MEDIUM = 5000;
+  public static final long SOUND_DEFAULT_SPAWN_DELAY_MEDIUM = 1000;
+  public static final long PLAYER_DEFAULT_MOVE_DELAY_HARD = 200;
+  public static final long FRUIT_DEFAULT_SPAWN_DELAY_HARD = 5000;
+  public static final long SOUND_DEFAULT_SPAWN_DELAY_HARD = 1000;
+  public static final double SCORE_MULT_EASY = 1.0;
+  public static final double SCORE_MULT_MEDIUM = 1.5;
+  public static final double SCORE_MULT_HARD = 2.0;
+    
   public static final long TOKEN_LIFESPAN = 20000;
+  
   
   // How many grid squares away that tokens are allowed to spawn.
   public static final int TOKEN_SPAWN_MIN_DISTANCE = 5;
@@ -50,6 +61,7 @@ public class GameState
   private JTextComponent messageOutput;
   private Fruit currentFruit;
   private int score;
+  private double scoreMult;
   
   ///// CONSTRUCTORS
   /** Default constructor.
@@ -78,6 +90,21 @@ public class GameState
       playerMoveDelay = PLAYER_DEFAULT_MOVE_DELAY_EASY;
       fruitSpawnDelay = FRUIT_DEFAULT_SPAWN_DELAY_EASY;
       soundSpawnDelay = SOUND_DEFAULT_SPAWN_DELAY_EASY;
+      scoreMult = SCORE_MULT_EASY;
+    }
+    else if (diff == Difficulty.MEDIUM)
+    {
+      playerMoveDelay = PLAYER_DEFAULT_MOVE_DELAY_MEDIUM;
+      fruitSpawnDelay = FRUIT_DEFAULT_SPAWN_DELAY_MEDIUM;
+      soundSpawnDelay = SOUND_DEFAULT_SPAWN_DELAY_MEDIUM;
+      scoreMult = SCORE_MULT_HARD; 
+    }
+    else if (diff == Difficulty.HARD)
+    {
+      playerMoveDelay = PLAYER_DEFAULT_MOVE_DELAY_HARD;
+      fruitSpawnDelay = FRUIT_DEFAULT_SPAWN_DELAY_HARD;
+      soundSpawnDelay = SOUND_DEFAULT_SPAWN_DELAY_HARD;
+      scoreMult = SCORE_MULT_HARD;
     }
   }
   
@@ -161,18 +188,25 @@ public class GameState
         {
           killTimers();
           messageOutput.setText("GAME OVER.\nScore = "+Integer.toString(score));
+          // update the server
+          Score s = new Score("", score);
+          s.obtainPlayerName((JFrame)SwingUtilities.getWindowAncestor(screen));
+          
+          if(s.send() == 200) {
+            
+          }
+          else {
+            JOptionPane.showMessageDialog((JFrame)SwingUtilities.getWindowAncestor(screen),
+                                          "Network Error",
+                                          "Could not upload score.",
+                                          JOptionPane.ERROR_MESSAGE
+                                         );
+          }
         }
-		
-		// update the server
-		Score s = new Score("", score);
-		s.obtainPlayerName(SwingUtilities.getWindowAncestor(screen));
-		/*if(s.send() == 200) {
-			
-		}
-		else {
-			
-		}*/
-		
+  
+  
+  
+  
         updateTokens();
         screen.repaint();
       }  
@@ -184,8 +218,7 @@ public class GameState
       public void actionPerformed(ActionEvent e)
       {
         Fruit newFruit = Fruit.randomFruit(difficulty);
-        while (player.getTail().contains( newFruit.randomizeLocation() ) 
-                 || newFruit.getCoord().equals(player.getHead()));
+        findSpawnLocation(newFruit);
         newFruit.markSpawn();
         tokens.add(newFruit);
         screen.repaint();
@@ -200,8 +233,7 @@ public class GameState
         if (currentFruit != null)
         {
           Sound newSound = Sound.randomSound(difficulty);
-          while (player.getTail().contains( newSound.randomizeLocation() ) 
-                   || newSound.getCoord().equals(player.getHead()));
+          findSpawnLocation(newSound);
           newSound.markSpawn();
           tokens.add(newSound);
           screen.repaint();
@@ -261,11 +293,26 @@ public class GameState
     tokens.add(temp);
   }
   
-  /** Performs 3-2-1-go action before game begins
+  /** Randomize token spawn until spawn location is valid
+    * @return - Coord location of where token is spawned
     */
-  private void performCountdown() 
+  private Coord findSpawnLocation(Token tok)
   {
-  
+    boolean found = false;
+    while (!found)
+    {
+      found = true;
+      tok.randomizeLocation();
+      if (player.getTail().contains( tok.getCoord() ) 
+            || tok.getCoord().distanceRaw(player.getHead()) < TOKEN_SPAWN_MIN_DISTANCE)
+        found = false;
+      for (Token oldToken : tokens)
+      {
+        if (oldToken.getCoord().equals(tok.getCoord()))
+          found = false;
+      }
+    }
+    return tok.getCoord();
   }
   
   /** Tests to see if the player is out of bounds, and loops them back around
@@ -337,7 +384,7 @@ public class GameState
       Fruit eatenFruit = (Fruit)eatenToken;
       messageOutput.setText(eatenFruit.getTask());
       currentFruit = eatenFruit;
-      score += FRUIT_SCORE;
+      score += (FRUIT_SCORE * scoreMult);
     }
     else if (eatenToken instanceof Sound)
     {
@@ -345,10 +392,10 @@ public class GameState
       if (currentFruit.getSoundColl().contains( eatenSound.getSound() ))
       {
         player.addToTail(1);
-        score += SOUND_RIGHT_SCORE;
+        score += (SOUND_RIGHT_SCORE * scoreMult);
       } else {
         player.subtractFromTail(2);
-        score += SOUND_WRONG_SCORE;
+        score += (SOUND_WRONG_SCORE * scoreMult);
       }
     }
       
